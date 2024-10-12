@@ -9,13 +9,8 @@
  */
 class MultipleChoiceExercise : public Exercise {
 public:
-    /**
-     * @brief Constructs a MultipleChoiceExercise with the given parameters.
-     * @param question The question text.
-     * @param options The list of answer options.
-     * @param correctOption The correct option character (e.g., 'A', 'B', 'C', 'D').
-     * @param skills The skills addressed by the exercise.
-     */
+    // Constructs a MultipleChoiceExercise with the given parameters.
+
     MultipleChoiceExercise(const std::string& question, const std::vector<std::string>& options, char correctOption, const std::vector<std::string>& skills);
 
     /**

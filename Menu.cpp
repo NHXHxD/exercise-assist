@@ -2,44 +2,43 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <chrono>
 
 void Menu::displayMainMenu(User& user) {
-    initializeLessons();
-
     int choice = 0;
     do {
         std::cout << "\nMain Menu:\n";
-        std::cout << "1. Start Lesson\n";
-        std::cout << "2. View Progress\n";
-        std::cout << "3. Achievements\n";
-        std::cout << "4. Save Progress\n";
-        std::cout << "5. Load Progress\n";
-        std::cout << "6. Create Custom Exercises\n";
-        std::cout << "7. Edit Custom Exercises\n";
+        std::cout << "1. Create a New Skill\n";
+        std::cout << "2. Add Exercises to a Skill\n";
+        std::cout << "3. Study a Skill\n";
+        std::cout << "4. View Progress\n";
+        std::cout << "5. Achievements\n";
+        std::cout << "6. Save Data\n";
+        std::cout << "7. Load Data\n";
         std::cout << "8. Exit\n";
-        choice = getValidatedInt("Enter your choice: ", 1, 8);
-
+        int choice;
+        std::cin >> choice;
         switch (choice) {
             case 1:
-                handleUserSelection(user);
+                createSkill();
                 break;
             case 2:
-                user.viewProgress();
+                addExercisesToSkill();
                 break;
             case 3:
-                std::cout << user;
+                studySkill(user);
                 break;
             case 4:
-                dataManager.saveProgress(user, customLesson);
+                user.viewProgress();
                 break;
             case 5:
-                dataManager.loadProgress(user, customLesson);
+                user.getAchievements();
                 break;
             case 6:
-                createCustomExercises(user);
+                saveData(user);
                 break;
             case 7:
-                editCustomExercises();
+                loadData(user);
                 break;
             case 8:
                 std::cout << "Exiting the application." << std::endl;
@@ -50,87 +49,60 @@ void Menu::displayMainMenu(User& user) {
     } while (choice != 8);
 }
 
-void Menu::handleUserSelection(User& user) {
-    addCustomLesson(); // Ensure custom lesson is included if it has exercises
-
-    std::cout << "Available Lessons:\n";
-    for (size_t i = 0; i < lessons.size(); ++i) {
-        std::cout << i + 1 << ". " << lessons[i].getTitle() << std::endl;
+void Menu::createSkill() {
+    std::cout << "Enter the name of the new skill: ";
+    std::string skillName;
+    std::getline(std::cin, skillName);
+    if (skillName.empty()) {
+        std::cout << "Skill name cannot be empty." << std::endl;
+        return;
     }
-    int lessonChoice = getValidatedInt("Enter the number of the lesson you want to start: ", 1, static_cast<int>(lessons.size()));
-
-    lessons[lessonChoice - 1].startLesson(user);
+    // Check if skill already exists
+    for (const auto& skill : skills) {
+        if (skill.getName() == skillName) {
+            std::cout << "Skill already exists." << std::endl;
+            return;
+        }
+    }
+    skills.emplace_back(skillName);
+    std::cout << "Skill '" << skillName << "' created successfully." << std::endl;
 }
 
-void Menu::initializeLessons() {
-    // Initialize lessons only once
-    if (lessons.empty()) {
-        Lesson lesson1("Mathematics Basics", "Learn the fundamentals of mathematics.", {"Mathematics"});
-        lesson1.addExercise(new MultipleChoiceExercise(
-            "What is 2 + 2?",
-            {"1", "2", "3", "4"},
-            'D',
-            {"Mathematics"}));
-        lesson1.addExercise(new TrueFalseExercise(
-            "Is 5 a prime number?",
-            true,
-            {"Mathematics"}));
-        lessons.push_back(lesson1);
-
-        Lesson lesson2("Critical Thinking", "Enhance your problem-solving skills.", {"Critical Thinking"});
-        lesson2.addExercise(new FillInTheBlankExercise(
-            "The sun rises in the ____.",
-            "east",
-            {"Critical Thinking"}));
-        lesson2.addExercise(new TimedMultipleChoiceExercise(
-            "What is the next number in the sequence: 2, 4, 6, ?",
-            {"7", "8", "9", "10"},
-            'B',
-            10,
-            {"Critical Thinking"}));
-        lessons.push_back(lesson2);
-
-        customLesson = Lesson("Custom Exercises", "Your own custom exercises.", {});
+void Menu::addExercisesToSkill() {
+    if (skills.empty()) {
+        std::cout << "No skills available. Please create a skill first." << std::endl;
+        return;
     }
-}
+    std::cout << "Select a skill to add exercises to:" << std::endl;
+    for (size_t i = 0; i < skills.size(); ++i) {
+        std::cout << i + 1 << ". " << skills[i].getName() << std::endl;
+    }
+    int choice;
+    std::cin >> choice;
 
-void Menu::createCustomExercises(User& user) {
-    int numExercises = getValidatedInt("How many exercises would you like to create? ", 1, 100);
+    Skill& selectedSkill = skills[choice - 1];
 
-    for (int i = 0; i < numExercises; ++i) {
-        std::cout << "\nCreating Exercise " << i + 1 << ":\n";
+    int numExercises;
+    std::cin >> numExercises;
+
+    // choose exercise to create
+    for (int i = 0; i < numExercises; i++) {
+        std::cout << "\nCreating Exercise " << i + 1 << " for skill '" << selectedSkill.getName() << "':\n";
         std::cout << "Select exercise type:\n";
         std::cout << "1. Multiple Choice\n";
         std::cout << "2. True/False\n";
         std::cout << "3. Fill in the Blank\n";
-        int exerciseType = getValidatedInt("Enter your choice: ", 1, 3);
-
+        int exerciseType;
+        std::cin >> exerciseType;
         std::string question;
-        std::vector<std::string> skills;
-        std::string skillInput;
-
         std::cout << "Enter the question/prompt: ";
         std::getline(std::cin, question);
 
-        std::cout << "Enter the skill(s) addressed (separated by commas): ";
-        std::getline(std::cin, skillInput);
-        // Split skills by commas
-        std::istringstream skillStream(skillInput);
-        std::string skill;
-        while (std::getline(skillStream, skill, ',')) {
-            skill.erase(std::remove(skill.begin(), skill.end(), ' '), skill.end()); // Remove spaces
-            if (!skill.empty()) {
-                skills.push_back(skill);
-            }
-        }
-
         switch (exerciseType) {
             case 1: {
-                // Multiple Choice
-                int numOptions = getValidatedInt("How many options? (2-6): ", 2, 6);
-
+                // Multiple Choice (A - B - C - D)
                 std::vector<std::string> options;
-                for (int j = 0; j < numOptions; ++j) {
+                for (int j = 0; j < 4; ++j) {
                     std::string option;
                     std::cout << "Enter option " << static_cast<char>('A' + j) << ": ";
                     std::getline(std::cin, option);
@@ -140,9 +112,9 @@ void Menu::createCustomExercises(User& user) {
                 char correctOption;
                 do {
                     std::cout << "Enter the correct option letter (";
-                    for (int j = 0; j < numOptions; ++j) {
+                    for (int j = 0; j < 4; ++j) {
                         std::cout << static_cast<char>('A' + j);
-                        if (j < numOptions - 1) std::cout << ", ";
+                        if (j < 4 - 1) std::cout << ", ";
                     }
                     std::cout << "): ";
                     std::string input;
@@ -156,7 +128,7 @@ void Menu::createCustomExercises(User& user) {
                     std::cout << "Invalid option. Please try again." << std::endl;
                 } while (true);
 
-                customLesson.addExercise(new MultipleChoiceExercise(question, options, correctOption, skills));
+                selectedSkill.addExercise(new MultipleChoiceExercise(question, options, correctOption, selectedSkill.getName()));
                 break;
             }
             case 2: {
@@ -168,7 +140,7 @@ void Menu::createCustomExercises(User& user) {
                     std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
                 } while (answer != "true" && answer != "false");
                 bool isTrue = (answer == "true");
-                customLesson.addExercise(new TrueFalseExercise(question, isTrue, skills));
+                selectedSkill.addExercise(new TrueFalseExercise(question, isTrue, selectedSkill.getName()));
                 break;
             }
             case 3: {
@@ -176,58 +148,62 @@ void Menu::createCustomExercises(User& user) {
                 std::string correctAnswer;
                 std::cout << "Enter the correct answer: ";
                 std::getline(std::cin, correctAnswer);
-                customLesson.addExercise(new FillInTheBlankExercise(question, correctAnswer, skills));
+                selectedSkill.addExercise(new FillInTheBlankExercise(question, correctAnswer, selectedSkill.getName()));
                 break;
             }
             default:
                 std::cout << "Invalid exercise type. Skipping this exercise." << std::endl;
                 break;
         }
-        customLesson.addSkills(skills);
     }
 
-    std::cout << "Custom exercises created successfully!" << std::endl;
+    std::cout << "Exercises added to skill '" << selectedSkill.getName() << "' successfully!" << std::endl;
 }
 
-void Menu::addCustomLesson() {
-    // If customLesson has exercises and is not already in the lessons list, add it
-    if (!customLesson.getExercises().empty()) {
-        bool exists = false;
-        for (const auto& lesson : lessons) {
-            if (lesson.getTitle() == customLesson.getTitle()) {
-                exists = true;
-                break;
-            }
-        }
-        if (!exists) {
-            lessons.push_back(customLesson);
-        }
+void Menu::studySkill(User& user) {
+    if (skills.empty()) {
+        std::cout << "No skills available. Please create a skill first." << std::endl;
+        return;
     }
-}
+    std::cout << "Select a skill to study:" << std::endl;
+    for (size_t i = 0; i < skills.size(); ++i) {
+        std::cout << i + 1 << ". " << skills[i].getName() << std::endl;
+    }
+    int choice = getValidatedInt("Enter your choice: ", 1, static_cast<int>(skills.size()));
+    Skill& selectedSkill = skills[choice - 1];
 
-void Menu::editCustomExercises() {
-    if (customLesson.getExercises().empty()) {
-        std::cout << "No custom exercises to edit." << std::endl;
+    if (selectedSkill.getExercises().empty()) {
+        std::cout << "No exercises available for this skill. Please add exercises first." << std::endl;
         return;
     }
 
-    std::cout << "Custom Exercises:\n";
-    const auto& exercises = customLesson.getExercises();
-    for (size_t i = 0; i < exercises.size(); ++i) {
-        std::cout << i + 1 << ". " << exercises[i]->questionText << std::endl;
+    std::cout << "Starting study session for skill: " << selectedSkill.getName() << std::endl;
+
+    int correctAnswers = 0;
+    auto startTime = std::chrono::steady_clock::now();
+
+    for (auto exercise : selectedSkill.getExercises()) {
+        exercise->presentExercise();
+        std::string userAnswer;
+        std::getline(std::cin, userAnswer);
+
+        bool isCorrect = exercise->checkAnswer(userAnswer);
+        if (isCorrect) {
+            std::cout << "Correct!" << std::endl;
+            correctAnswers++;
+        } else {
+            std::cout << "Incorrect." << std::endl;
+        }
     }
-    std::cout << (exercises.size() + 1) << ". Back to Main Menu\n";
-    int choice = getValidatedInt("Enter the number of the exercise to delete (or choose to go back): ", 1, static_cast<int>(exercises.size() + 1));
 
-    if (choice == static_cast<int>(exercises.size() + 1)) {
-        return;
-    }
+    auto endTime = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsedSeconds = endTime - startTime;
 
-    // Delete the selected exercise
-    delete exercises[choice - 1];
-    customLesson.getExercises().erase(customLesson.getExercises().begin() + (choice - 1));
+    user.updateSkillTime(selectedSkill.getName(), elapsedSeconds.count());
 
-    std::cout << "Exercise deleted successfully." << std::endl;
+    std::cout << "Study session completed. Your score: " << correctAnswers << "/" << selectedSkill.getExercises().size() << std::endl;
+
+    checkAchievements(user, selectedSkill.getName());
 }
 
 int Menu::getValidatedInt(const std::string& prompt, int min, int max) {
@@ -240,8 +216,4 @@ int Menu::getValidatedInt(const std::string& prompt, int min, int max) {
         if (ss >> value && value >= min && value <= max) {
             break;
         } else {
-            std::cout << "Invalid input. Please enter a number between " << min << " and " << max << "." << std::endl;
-        }
-    }
-    return value;
-}
+            std::cout << "Invalid input. Plea

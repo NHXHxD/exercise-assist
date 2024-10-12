@@ -2,7 +2,7 @@
 #define DATAMANAGER_H
 
 #include "User.h"
-#include "Lesson.h"
+#include "Skill.h"
 #include <vector>
 
 /**
@@ -11,18 +11,18 @@
 class DataManager {
 public:
     /**
-     * @brief Saves the user's progress and custom lessons to a file.
+     * @brief Saves the user's progress and skills to a file.
      * @param user The user whose progress is to be saved.
-     * @param customLesson The custom lesson to save.
+     * @param skills The skills to save.
      */
-    void saveProgress(const User& user, const Lesson& customLesson) const;
+    void saveData(const User& user, const std::vector<Skill>& skills) const;
 
     /**
-     * @brief Loads the user's progress and custom lessons from a file.
+     * @brief Loads the user's progress and skills from a file.
      * @param user The user whose progress is to be loaded.
-     * @param customLesson The custom lesson to load.
+     * @param skills The skills to load.
      */
-    void loadProgress(User& user, Lesson& customLesson) const;
+    void loadData(User& user, std::vector<Skill>& skills) const;
 };
 
 #endif // DATAMANAGER_H

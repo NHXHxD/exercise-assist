@@ -1,61 +1,72 @@
 #include "User.h"
-#include "Lesson.h"
 
-User::User(const std::string& name)
+User::User( std::string& name)
     : username(name) {
-    // Constructor implementation
+    int correct = 0;
+    skillProficiency
 }
 
-void User::startLesson(Lesson& lesson) {
-    lesson.startLesson(*this);
+
+void User::updateSkillProficiency( std::string& skill) {
+    skillProficiency[skill]++;
 }
 
-void User::updateSkillProficiency(const std::string& skill, int points) {
-    skillProficiency[skill] += points;
-}
-
-void User::updateSkillTime(const std::string& skill, double time) {
+void User::updateSkillTime( std::string& skill, double time) {
     skillTimeSpent[skill] += time;
 }
 
-void User::viewProgress() const {
+void User::viewProgress()  {
     std::cout << "Progress for user: " << username << std::endl;
-    std::cout << "Skill Proficiency:" << std::endl;
-    for (const auto& entry : skillProficiency) {
+    std::cout << "Skill Proficiency: " << std::endl;
+    for ( auto& entry : skillProficiency) {
         std::cout << "- " << entry.first << ": " << entry.second << " points" << std::endl;
     }
     std::cout << "Time Spent on Skills:" << std::endl;
-    for (const auto& entry : skillTimeSpent) {
+    for ( auto& entry : skillTimeSpent) {
         std::cout << "- " << entry.first << ": " << entry.second << " seconds" << std::endl;
     }
 }
 
-void User::earnAchievement(const Achievement& achievement) {
-    achievements.push_back(achievement);
-    std::cout << "Congratulations! You've earned the achievement: " << achievement.getName() << std::endl;
+void User::correctChoice() {
+    this->correct++;
 }
 
-std::ostream& operator<<(std::ostream& os, const User& user) {
-    os << "Username: " << user.username << std::endl;
-    os << "Achievements: " << std::endl;
-    for (const auto& achievement : user.achievements) {
-        os << "- " << achievement.getName() << ": " << achievement.getDescription() << std::endl;
+void User::earnAchievement() {
+    if (this->correct >= 5) {
+        Achievement ach_one = Achievement("Correct 5!", "Getting 5 questions correct!");
+        achievements.push_back(ach_one);
+        std::cout << "Congratulations! You've earned the achievement: Correct 5!" << std::endl;
     }
-    return os;
+    if (this->correct >= 10) {
+    Achievement ach_one = Achievement("Correct 10!", "Getting 10 questions correct!");
+    achievements.push_back(ach_one);
+    std::cout << "Congratulations! You've earned the achievement: Correct 10!" << std::endl;
+}
+    if (this->correct >= 15) {
+        Achievement ach_one = Achievement("Correct 15!", "Getting 15 questions correct!");
+        achievements.push_back(ach_one);
+        std::cout << "Congratulations! You've earned the achievement: Correct 15!" << std::endl;
+    }
+
+    if (this->correct >= 10) {
+        Achievement ach_one = Achievement("Correct 20!", "Getting 20 questions correct!");
+        achievements.push_back(ach_one);
+        std::cout << "Congratulations! You've earned the achievement: Correct 20!" << std::endl;
+}
 }
 
-std::string User::getUsername() const {
+std::string User::getUsername()  {
     return username;
 }
 
-const std::vector<Achievement>& User::getAchievements() const {
+ std::vector<Achievement>& User::getAchievements()  {
     return achievements;
 }
 
-const std::map<std::string, int>& User::getSkillProficiency() const {
+ std::map<std::string, int>& User::getSkillProficiency()  {
     return skillProficiency;
 }
 
-const std::map<std::string, double>& User::getSkillTimeSpent() const {
+ std::map<std::string, double>& User::getSkillTimeSpent()  {
     return skillTimeSpent;
 }

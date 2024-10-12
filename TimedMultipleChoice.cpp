@@ -1,4 +1,4 @@
-#include "TimedMultipleChoiceExercise.h"
+#include "TimedMultipleChoice.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
