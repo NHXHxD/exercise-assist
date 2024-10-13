@@ -13,36 +13,47 @@ class User {
     protected:
         std::string username;
         std::vector<Achievement> achievements;
-        int numOfAch;
         std::map<std::string, int> skillProficiency; // Skill name to points
         std::map<std::string, double> skillTimeSpent; // Skill name to time in seconds
         int correct;
     public:
-        User(const std::string& username);
+        // constructor
+        User(std::string& username);
 
+        // create a skill for user
+        void createSkill();
+
+        // add exercises to the skill
+        void addExercisesToSkill();
+
+        // study the skill
+        void studySkill();
+
+        // view user's progress
+        void viewProgress();
 
         // Updates the user's skill proficiency.
-        void updateSkillProficiency(const std::string& skill);
+        void updateSkillProficiency(std::string& skill);
 
         // Updates the time spent on a skill.
-        void updateSkillTime(const std::string& skill, double time);
+        void updateSkillTime(std::string& skill, double time);
 
 
         // Displays the user's progress.
-        void viewProgress() const;
+        void viewProgress();
 
 
         // Gets the username of the user.
 
-        std::string getUsername() const;
+        std::string getUsername() ;
         // earn achievement
-        void earnAchievement(const Achievement& achievement) {
+        void earnAchievement();
 
         // increase the number of corect choices
         void correctChoice();
 
         // Gets the user's achievements.
-        std::vector<Achievement>& getAchievements();
+        std::vector<Achievement> getAchievements();
 
         // Gets the user's skill proficiency.
         std::map<std::string, int>& getSkillProficiency();
@@ -50,7 +61,7 @@ class User {
         // Gets the user's skill time spent.
         std::map<std::string, double>& getSkillTimeSpent();
 
-
+        
 };
 
-#endif 
+#endif USER_H

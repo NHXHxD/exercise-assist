@@ -2,7 +2,6 @@
 #define DATAMANAGER_H
 
 #include "User.h"
-#include "Skill.h"
 #include <vector>
 
 /**
@@ -15,14 +14,14 @@ public:
      * @param user The user whose progress is to be saved.
      * @param skills The skills to save.
      */
-    void saveData(const User& user, const std::vector<Skill>& skills) const;
+    void saveData(const User& user) const;
 
     /**
      * @brief Loads the user's progress and skills from a file.
      * @param user The user whose progress is to be loaded.
      * @param skills The skills to load.
      */
-    void loadData(User& user, std::vector<Skill>& skills) const;
+    void loadData(User& user) const;
 };
 
 #endif // DATAMANAGER_H

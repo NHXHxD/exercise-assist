@@ -9,17 +9,17 @@ class Achievement {
         std::string achievementName;
         std::string description;
     public:
-        Achievement(const std::string& name, const std::string& description);
+        Achievement(std::string name, std::string description);
 
         // Displays the achievement.
-        void displayAchievement() const;
+        void displayAchievement();
 
         // Gets the name of the achievement.
-        std::string getName() const;
+        std::string getName();
 
         // Gets the description of the achievement.
 
-        std::string getDescription() const;
+        std::string getDescription();
     };
 
 #endif // ACHIEVEMENT_H
