@@ -1,13 +1,11 @@
 #include "Exercise.h"
 
-Exercise::Exercise(const std::string& question, const std::vector<std::string>& skills)
-    : questionText(question), skillsAddressed(skills) {
-    // Constructor implementation
+Exercise::Exercise(std::string title, std::string description) {
+    this->title = title;
+    this->description = description;
 }
 
-const std::vector<std::string>& Exercise::getSkills() const {
-    return skillsAddressed;
-}
+
 
 Exercise::~Exercise() {
     // Virtual destructor implementation

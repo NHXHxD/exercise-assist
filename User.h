@@ -22,9 +22,6 @@ class User {
         // constructor
         User(std::string& username);
 
-        // study the skill
-        void studySkill();
-
         // view user's progress
         void viewProgress();
 
@@ -35,8 +32,6 @@ class User {
         void updateSkillTime(std::string& skill, double time);
 
 
-        // Displays the user's progress.
-        void viewProgress();
 
         // Gets vector of exercises
         vector<Exercise*> getExercises();
@@ -54,11 +49,7 @@ class User {
         // Gets the user's achievements.
         std::vector<Achievement> getAchievements();
 
-        // Gets the user's skill proficiency.
-        std::map<std::string, int>& getSkillProficiency();
 
-        // Gets the user's skill time spent.
-        std::map<std::string, double>& getSkillTimeSpent();
 
         
 };

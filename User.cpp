@@ -27,31 +27,7 @@ void User::viewProgress()  {
     }
 }
 
-void User::addExercisesToSkill() {
-    int choice; 
-    while (choice < 1 || choice > 4) { 
-        cout << "Which type of exercise would you like to create? (1-4): " << endl;
-        cout << "1. Multiple Choice\n";
-        cout << "2. Timed Multiple Choice\n";
-        cout << "3. True/False\n";
-        cout << "4. Fill in the Blank\n";
-        int numOfExercise = 0;
-        while (numOfExercise < 1 || numOfExercise > 1000)
-        cout << "How many questions will your exercise have? (1-100): " << endl;
-    }
-    if (choice == 1) {
-        
-    } 
-    else if (choice == 2) {
 
-    }
-    else if (choice == 3) {
-
-    }
-    else if (choice == 4) {
-
-    }
-}
 void User::studySkill() {
 
 }

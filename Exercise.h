@@ -13,7 +13,7 @@ class Exercise {
         std::string description;
     public:
         // Constructs an Exercise with the given question text and skills addressed.
-        Exercise(const std::string& question, const std::vector<std::string>& skills);
+        Exercise(std::string title, std::string description);
 
         // Creates the exercise to the user.
         virtual void createExercise() = 0;
@@ -22,7 +22,7 @@ class Exercise {
         virtual void presentExercise() = 0;
 
         // Checks the user's answer for correctness.
-        virtual bool checkAnswer(const std::string& userAnswer) = 0;
+        virtual bool checkAnswer() = 0;
 
 
 
