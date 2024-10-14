@@ -7,11 +7,14 @@
 #include <vector>
 using namespace std;
 
-class MultipleChoiceExercise : public Exercise {
+class MCExercise : public Exercise {
     protected:
         map<string, string> QnA;
-        string options[4][100];
+        string options[100][4];
     public:
-        
+        MCExercise* createExercise(int size);
+        void checkAnswers(MCExercise* exercise);
+        void presentExercise(MCExercise* exercise);
 
+};
 #endif // MULTIPLECHOICEEXERCISE_H

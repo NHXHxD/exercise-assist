@@ -6,25 +6,21 @@
 #include <map>
 #include <iostream>
 #include "Achievement.h"
-
+#include "Exercise.h"
+using namespace std;
 
 // Class representing a user profile.
 class User {
     protected:
         std::string username;
         std::vector<Achievement> achievements;
-        std::map<std::string, int> skillProficiency; // Skill name to points
-        std::map<std::string, double> skillTimeSpent; // Skill name to time in seconds
+        vector<Exercise*> exercises; 
+        std::map<std::string, int> proficiency; // Skill name to points
+        std::map<std::string, double> timeSpent; // Skill name to time in seconds
         int correct;
     public:
         // constructor
         User(std::string& username);
-
-        // create a skill for user
-        void createSkill();
-
-        // add exercises to the skill
-        void addExercisesToSkill();
 
         // study the skill
         void studySkill();
@@ -42,6 +38,9 @@ class User {
         // Displays the user's progress.
         void viewProgress();
 
+        // Gets vector of exercises
+        vector<Exercise*> getExercises();
+         
 
         // Gets the username of the user.
 

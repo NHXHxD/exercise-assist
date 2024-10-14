@@ -7,44 +7,40 @@ User::User( string& name)
 }
 
 
-void User::updateSkillProficiency( string& skill) {
-    skillProficiency[skill]++;
+void User::updateProficiency( string& skill) {
+    // proficiency++;
 }
 
-void User::updateSkillTime( string& skill, double time) {
-    skillTimeSpent[skill] += time;
+void User::updateTime( double time) {
+    timeSpent += time;
 }
 
 void User::viewProgress()  {
     cout << "Progress for user: " << username << endl;
-    cout << "Skill Proficiency: " << endl;
-    for ( auto& entry : skillProficiency) {
+    cout << "Proficiency: " << endl;
+    for ( auto& entry : proficiency) {
         cout << "- " << entry.first << ": " << entry.second << " points" << endl;
     }
-    cout << "Time Spent on Skills:" << endl;
-    for ( auto& entry : skillTimeSpent) {
+    cout << "Time Spent:" << endl;
+    for ( auto& entry : timeSpent) {
         cout << "- " << entry.first << ": " << entry.second << " seconds" << endl;
     }
 }
 
-void User::createSkill() {
-    map<string, int> skills = getSkillProficiency();
-    string skill;
-    cout << "Enter a skill you wish to learn: ";
-    cin >> skill;
-    skills.insert(pair<string, int>(skill, 0));
-}
 void User::addExercisesToSkill() {
     int choice; 
-    while (choice < 1 || choice > 4) {
+    while (choice < 1 || choice > 4) { 
         cout << "Which type of exercise would you like to create? (1-4): " << endl;
         cout << "1. Multiple Choice\n";
         cout << "2. Timed Multiple Choice\n";
         cout << "3. True/False\n";
         cout << "4. Fill in the Blank\n";
+        int numOfExercise = 0;
+        while (numOfExercise < 1 || numOfExercise > 1000)
+        cout << "How many questions will your exercise have? (1-100): " << endl;
     }
     if (choice == 1) {
-
+        
     } 
     else if (choice == 2) {
 
@@ -97,14 +93,17 @@ string User::getUsername()  {
     return username;
 }
 
- vector<Achievement> User::getAchievements()  {
     return achievements;
 }
 
- map<string, int>& User::getSkillProficiency()  {
-    return skillProficiency;
+map<string, int>& User::getProficiency()  {
+    return proficiency;
 }
 
- map<string, double>& User::getSkillTimeSpent()  {
-    return skillTimeSpent;
+map<string, double>& User::getTimeSpent()  {
+    return timeSpent;
+}
+
+vector<Exercise*> User::getExercises() {
+    return this->exercises;
 }

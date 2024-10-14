@@ -18,9 +18,8 @@ int main() {
     int choice; 
     while (choice != 8) {
         std::cout << "\nMain Menu:\n";
-        std::cout << "1. Create a New Skill\n";
-        std::cout << "2. Add Exercises to a Skill\n";
-        std::cout << "3. Study a Skill\n";
+        std::cout << "1. Create a New Exercise\n";
+        std::cout << "3. Study a Exercise\n";
         std::cout << "4. View Progress\n";
         std::cout << "5. Achievements\n";
         std::cout << "6. Save Data\n";
@@ -28,10 +27,10 @@ int main() {
         std::cout << "8. Exit\n";
         switch (choice) {
             case 1:
-                user.createSkill();
+                user();
                 break;
             case 2:
-                user.addExercisesToSkill();
+                user.addExercise();
                 break;
             case 3:
                 user.studySkill();
