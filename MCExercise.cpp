@@ -1,70 +1,81 @@
 #include "MCExercise.h"
 #include <iostream>
-#include "User.h"
-MCExercise::MCExercise(std::string title)     : Exercise(title)  {
+#include <limits>
+
+MCExercise::MCExercise(std::string title) : Exercise(title) {
     this->title = title;
     this->type = "MC";
 }
-Exercise* MCExercise::createExercise(int size) {
-    MCExercise* exercise;
-    for (int i = 0; i < size; i++) {
-        string q;
-        string a;
-        cout << "Enter question " << i + 1<< ": \n";
-        cin >> q;
-        cout << "Enter option A: \n";
-        cin >> exercise->options[i][0];
-        cout << "Enter option B: \n";
-        cin >>exercise->options[i][1];
-        cout << "Enter option C: \n";
-        cin >>exercise->options[i][2];
-        cout << "Enter option D: \n";
-        cin >>exercise->options[i][3];
-        cout << "Enter correct answer: \n";
-        cin >> a;
-        exercise->QnA.insert(pair<string,string>(q,a));
-    }
-    return exercise;
-}
 
+Exercise* MCExercise::createExercise(int size) {
+    // Clear the input buffer before starting
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    for (int i = 0; i < size; i++) {
+        MCQuestion q;
+
+        std::cout << "Enter question " << i + 1 << ": \n";
+        std::getline(std::cin, q.questionText);
+
+        std::cout << "Enter option A: \n";
+        std::getline(std::cin, q.options[0]);
+
+        std::cout << "Enter option B: \n";
+        std::getline(std::cin, q.options[1]);
+
+        std::cout << "Enter option C: \n";
+        std::getline(std::cin, q.options[2]);
+
+        std::cout << "Enter option D: \n";
+        std::getline(std::cin, q.options[3]);
+
+        std::cout << "Enter correct answer (A/B/C/D): \n";
+        std::getline(std::cin, q.correctAnswer);
+
+        questions.push_back(q);
+    }
+    return this; // Return the current object
+}
 
 int MCExercise::checkAnswer() {
-    vector<string> answers;
-    int point = 0;
-    map<string, string>::iterator it = QnA.begin();
-    int i = 0;
-    while (it != QnA.end()) {
-        cout << "Question" << i+1 << ": " << it->first  <<  endl;
-        cout << "A: " << options[i][0];
-        cout << "B: " << options[i][1];
-        cout << "C: " << options[i][2];
-        cout << "D: " << options[i][3];
-        cout << "Enter your answer: " << endl;
-        string ans;
-        cin >> ans;
-        answers.push_back(ans);
-        ++it;
-        i++;
+    int points = 0;
+    std::vector<std::string> userAnswers;
+
+    // Clear the input buffer before starting
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ensure input buffer is clear
+
+    // Display each question and get user's answer
+    for (size_t i = 0; i < questions.size(); ++i) {
+        const MCQuestion& q = questions[i];
+
+        std::cout << "\nQuestion " << i + 1 << ": " << q.questionText << std::endl;
+        std::cout << "A: " << q.options[0] << std::endl;
+        std::cout << "B: " << q.options[1] << std::endl;
+        std::cout << "C: " << q.options[2] << std::endl;
+        std::cout << "D: " << q.options[3] << std::endl;
+        std::cout << "Enter your answer: ";
+
+        std::string ans;
+        std::getline(std::cin, ans);
+        userAnswers.push_back(ans);
     }
-    it = QnA.begin();
-    i = 0;
-    while (it != QnA.end()) {
-        if (it->second == answers[i]) {
-            cout << "You got question " << i+1 << "correct!\n";
-            point++;
+
+    // Check user's answers after all questions have been answered
+    for (size_t i = 0; i < questions.size(); ++i) {
+        const MCQuestion& q = questions[i];
+        if (q.correctAnswer == userAnswers[i]) {
+            std::cout << "You got question " << i + 1 << " correct!\n";
+            points++;
+        } else {
+            std::cout << "Incorrect answer for question " << i + 1 << "!\n";
+            std::cout << "Correct answer is: " << q.correctAnswer << std::endl;
         }
-        else {
-            cout << "Incorrect answer for question " << i+1 << "!" << endl;
-            cout << "Correct answer is: " << it->second << endl;
-        }
-        ++it;
-        i++;
     }
-    return point;
+
+    std::cout << "You scored " << points << " out of " << questions.size() << "!\n";
+    return points;
 }
 
-string MCExercise::getType() {
+std::string MCExercise::getType() {
     return type;
 }
-
-

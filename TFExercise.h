@@ -1,23 +1,25 @@
 #ifndef TFEXERCISE_H
 #define TFEXERCISE_H
-#include <string>
-using namespace std;
-#include <map>
-#include "Exercise.h"
 
+#include "Exercise.h"
+#include <vector>
+#include <string>
 
 class TFExercise : public Exercise {
-    protected:
-        map<string, string> QnA;
-        string type;
-    public:
-        TFExercise(std::string title);
-        TFExercise* createExercise(int size);
-        int checkAnswer() override;
-        string getType();
+protected:
+    struct TFQuestion {
+        std::string questionText;
+        std::string correctAnswer;
+    };
 
+    std::vector<TFQuestion> questions;
+    std::string type;
 
-
+public:
+    TFExercise(std::string title);
+    Exercise* createExercise(int size) override;
+    int checkAnswer() override;
+    std::string getType() override;
 };
 
-#endif 
+#endif // TFEXERCISE_H

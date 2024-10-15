@@ -1,62 +1,76 @@
 #include "FBExercise.h"
 #include <iostream>
 #include <algorithm>
-#include <string>
+#include <limits>
+#include <cctype>
 
-using namespace std;
-
-FBExercise::FBExercise(string title)    : Exercise(title)  {
+FBExercise::FBExercise(std::string title) : Exercise(title) {
     this->title = title;
     this->type = "FB";
 }
 
-FBExercise* FBExercise::createExercise(int size) {
-    FBExercise* exercise;
+Exercise* FBExercise::createExercise(int size) {
+    // Clear the input buffer before starting
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     for (int i = 0; i < size; i++) {
-        string q;
-        string a;
-        cout << "Enter question " << i + 1<< ": \n";
-        cin >> q;
-        cout << "Enter correct answer in the blank: \n";
-        cin >> a;
-        exercise->QnA.insert(pair<string,string>(q,a));
+        FBQuestion q;
+
+        std::cout << "Enter question " << i + 1 << ": \n";
+        std::getline(std::cin, q.questionText);
+
+        std::cout << "Enter correct answer: \n";
+        std::getline(std::cin, q.correctAnswer);
+
+        questions.push_back(q);
     }
-    return exercise;
-}  
+    return this;
+}
 
 int FBExercise::checkAnswer() {
-    vector<string> answers;
-    int point = 0;
-    int i = 0;
-    map<string, string>::iterator it = QnA.begin();
-    while (it != QnA.end()) {
-        cout << "Question" << i+1 << ": " << it->first  <<  endl;
-        cout << "Enter your answer: " << endl;
-        string ans;
-        cin >> ans;
-        answers.push_back(ans);
-        ++it;
-    }
-    it = QnA.begin();
-    i = 0;
-    while (it != QnA.end()) {
-        if (it->second == answers[i]) {
-            cout << "You got question " << i+1 << "correct! \n";
-            point++;
-        }
-        else {
-            cout << "Incorrect answer for question " << i+1 << "!" << endl;
-            cout << "Correct answer is: " << it->second << endl;
-        }
-        ++it;
-        i++;
-    }
-    return point;
-    
+    int points = 0;
+    std::vector<std::string> userAnswers;
 
+    // Clear the input buffer before starting
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    // Display each question and get user's answer
+    for (size_t i = 0; i < questions.size(); ++i) {
+        const FBQuestion& q = questions[i];
+
+        std::cout << "\nQuestion " << i + 1 << ": " << q.questionText << std::endl;
+        std::cout << "Enter your answer: ";
+
+        std::string ans;
+        std::getline(std::cin, ans);
+
+        userAnswers.push_back(ans);
+    }
+
+    // Check user's answers after all questions have been answered
+    for (size_t i = 0; i < questions.size(); ++i) {
+        const FBQuestion& q = questions[i];
+
+        // Convert both answers to lowercase for case-insensitive comparison
+        std::string correctAnswer = q.correctAnswer;
+        std::string userAnswer = userAnswers[i];
+
+        std::transform(correctAnswer.begin(), correctAnswer.end(), correctAnswer.begin(), ::tolower);
+        std::transform(userAnswer.begin(), userAnswer.end(), userAnswer.begin(), ::tolower);
+
+        if (correctAnswer == userAnswer) {
+            std::cout << "You got question " << i + 1 << " correct!\n";
+            points++;
+        } else {
+            std::cout << "Incorrect answer for question " << i + 1 << "!\n";
+            std::cout << "Correct answer is: " << q.correctAnswer << std::endl;
+        }
+    }
+
+    std::cout << "You scored " << points << " out of " << questions.size() << "!\n";
+    return points;
 }
 
-string FBExercise::getType() {
+std::string FBExercise::getType() {
     return this->type;
 }
-

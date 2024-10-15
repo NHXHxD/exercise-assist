@@ -1,23 +1,25 @@
 #ifndef FBEXERCISE_H
 #define FBEXERCISE_H
-#include <map>
+
+#include "Exercise.h"
+#include <vector>
 #include <string>
 
-using namespace std;
-#include "Exercise.h"
-
-
 class FBExercise : public Exercise {
-    protected:
-        map<string, string> QnA; 
-        string type;
-    public:
-        FBExercise(string title);
-        FBExercise* createExercise(int size);
-        string getType();
-        int checkAnswer();
+protected:
+    struct FBQuestion {
+        std::string questionText;
+        std::string correctAnswer;
+    };
 
+    std::vector<FBQuestion> questions;
+    std::string type;
 
+public:
+    FBExercise(std::string title);
+    Exercise* createExercise(int size) override;
+    int checkAnswer() override;
+    std::string getType() override;
 };
 
-#endif 
+#endif // FBEXERCISE_H

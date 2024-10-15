@@ -6,6 +6,7 @@
 #include "TFExercise.h"
 #include "FBExercise.h"
 using namespace std;
+
 int main() {
     std::cout << "Welcome to SkillMaster!" << std::endl;
     std::cout << "Enter your username: ";
@@ -18,7 +19,8 @@ int main() {
 
     User user(username);
     vector<Exercise*> exercises;
-    int choice; 
+    int choice = 0;  // Initialize choice to prevent undefined behavior
+
     while (choice != 7) {
         std::cout << "\nMain Menu:\n";
         std::cout << "1. Create a New Exercise\n";
@@ -28,82 +30,85 @@ int main() {
         std::cout << "5. Save Data\n";
         std::cout << "6. Load Data\n";
         std::cout << "7. Exit\n";
+        std::cout << "Enter your choice: ";
+        cin >> choice;  // Get user input for choice
+
         if (choice == 1) {
-            int ch; 
-            while (ch < 1 || ch > 4) { 
+            int ch = 0;  // Initialize ch to prevent undefined behavior
+            while (ch < 1 || ch > 4) {
                 cout << "Which type of exercise would you like to create? (1-4): " << endl;
                 cout << "1. Multiple Choice\n";
                 cout << "2. Timed Multiple Choice\n";
                 cout << "3. True/False\n";
                 cout << "4. Fill in the Blank\n";
+                cout << "Enter your choice: ";
+                cin >> ch;  // Get user input for ch
             }
-                int numOfExercise = 0;
-                string name;
-                cout << "Enter a name for your exercise: " << endl;
-                cin >> name;
-                while (numOfExercise < 1 || numOfExercise > 100) {
-                    cout << "How many questions will your exercise have? (1-100): " << endl;
-                    cin >> numOfExercise;
-                }
-                // create a multiple choice exercise
-                if (ch == 1) {
-                    Exercise* exercise = new MCExercise(name);
-                    exercise->createExercise(numOfExercise);
-                    exercises.push_back(exercise);
-                }
-                /*
-                else if (ch == 2) {
-                    Exercise* exercise = new TMCExercise(name);
-                    exercise->createExercise(numOfExercise);
-                    exercises.push_back(exercise);
-                }
-                */
-                // create True False exercise
-                else if (ch == 3) {
-                    Exercise* exercise = new TFExercise(name);
-                    exercise->createExercise(numOfExercise);
-                    exercises.push_back(exercise);
-                }
-                
-                // create a fill in the blank exercise
-                else if (ch == 4) {
-                    Exercise* exercise = new FBExercise(name);
-                    exercise->createExercise(numOfExercise);
-                    exercises.push_back(exercise);
-                }
-               
-}
+
+            int numOfExercise = 0;
+            string name;
+            cout << "Enter a name for your exercise: " << endl;
+            cin >> name;
+            while (numOfExercise < 1 || numOfExercise > 100) {
+                cout << "How many questions will your exercise have? (1-100): " << endl;
+                cin >> numOfExercise;
+            }
+
+            // Create an exercise based on the user's choice
+            if (ch == 1) {
+                Exercise* exercise = new MCExercise(name);
+                exercise->createExercise(numOfExercise);
+                exercises.push_back(exercise);
+            }
+            /*
+            else if (ch == 2) {
+                Exercise* exercise = new TMCExercise(name);
+                exercise->createExercise(numOfExercise);
+                exercises.push_back(exercise);
+            }
+            */
+            else if (ch == 3) {
+                Exercise* exercise = new TFExercise(name);
+                exercise->createExercise(numOfExercise);
+                exercises.push_back(exercise);
+            }
+            else if (ch == 4) {
+                Exercise* exercise = new FBExercise(name);
+                exercise->createExercise(numOfExercise);
+                exercises.push_back(exercise);
+            }
+        }
         else if (choice == 2) {
             if (exercises.size() == 0) {
                 cout << "There is no available exercises. Please create more exercises!\n";
             }
-
-            for (int i = 0; i < exercises.size();i++) {
-                cout << i + 1 << ". "<< exercises[i]->getTitle() << endl;
+            else {
+                for (int i = 0; i < exercises.size(); i++) {
+                    cout << i + 1 << ". " << exercises[i]->getTitle() << endl;
+                }
+                cout << "Select an exercise: \n";
+                int c;
+                cin >> c;
+                int point = exercises[c - 1]->checkAnswer();  // Adjusted index to c - 1
             }
-            cout << "Select an exercise: \n";
-            int c;
-            cin >> c;
-            int point = exercises[c]->checkAnswer();
         }
         else if (choice == 3) {
             user.viewProgress();
-}
+        }
         else if (choice == 4) {
             vector<Achievement> achievement = user.getAchievements();
             for (int i = 0; i < achievement.size(); i++) {
                 achievement[i].displayAchievement();
             }
-
         }
         else if (choice == 7) {
             std::cout << "Exiting the application." << std::endl;
             break;
-    }
+        }
         else {
-                    std::cout << "Invalid choice. Please select a valid option." << std::endl;
+            std::cout << "Invalid choice. Please select a valid option." << std::endl;
         }
-        }
+    }
 
     return 0;
 }

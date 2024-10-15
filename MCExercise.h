@@ -3,20 +3,24 @@
 
 #include "Exercise.h"
 #include <vector>
-#include <map>
-#include <vector>
-using namespace std;
+#include <string>
 
 class MCExercise : public Exercise {
-    protected:
-        map<string, string> QnA;
-        string options[100][4];
-        string type;
-    public:
-        MCExercise(string title);
-        Exercise* createExercise(int size) override;
-        int checkAnswer() override;
-        string getType();
- 
+protected:
+    struct MCQuestion {
+        std::string questionText;
+        std::string options[4];
+        std::string correctAnswer;
+    };
+
+    std::vector<MCQuestion> questions;
+    std::string type;
+
+public:
+    MCExercise(std::string title);
+    Exercise* createExercise(int size) override;
+    int checkAnswer() override;
+    std::string getType() override;
 };
-#endif
+
+#endif // MCEXERCISE_H
