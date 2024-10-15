@@ -20,18 +20,10 @@ class User {
         int correct;
     public:
         // constructor
-        User(std::string& username);
+        User(std::string username);
 
         // view user's progress
         void viewProgress();
-
-        // Updates the user's skill proficiency.
-        void updateSkillProficiency(std::string& skill);
-
-        // Updates the time spent on a skill.
-        void updateSkillTime(std::string& skill, double time);
-
-
 
         // Gets vector of exercises
         vector<Exercise*> getExercises();

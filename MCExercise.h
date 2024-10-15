@@ -1,5 +1,5 @@
-#ifndef MULTIPLECHOICEEXERCISE_H
-#define MULTIPLECHOICEEXERCISE_H
+#ifndef MCEXERCISE_H
+#define MCEXERCISE_H
 
 #include "Exercise.h"
 #include <vector>
@@ -11,11 +11,12 @@ class MCExercise : public Exercise {
     protected:
         map<string, string> QnA;
         string options[100][4];
+        string type;
     public:
-        MCExercise();
-        MCExercise* createExercise(int size);
-        int checkAnswer(MCExercise* exercise);
-        void presentExercise(MCExercise* exercise);
-
+        MCExercise(string title);
+        Exercise* createExercise(int size) override;
+        int checkAnswer() override;
+        string getType();
+ 
 };
-#endif 
+#endif MCEXERCISE_H

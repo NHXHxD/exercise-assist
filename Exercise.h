@@ -3,7 +3,8 @@
 
 #include <string>
 #include <vector>
-
+#include <string>
+using namespace std;
 /**
  * @brief Abstract base class representing a generic exercise.
  */
@@ -16,14 +17,16 @@ class Exercise {
         Exercise(std::string title, std::string description);
 
         // Creates the exercise to the user.
-        virtual void createExercise() = 0;
+        virtual Exercise* createExercise(int size) = 0;
 
-        // Creates the exercise to the user.
-        virtual void presentExercise() = 0;
-
+        virtual string getType() = 0;
         // Checks the user's answer for correctness.
-        virtual bool checkAnswer() = 0;
+        virtual int checkAnswer() = 0;
 
+        // get title of the exercise
+        string getTitle() {
+            return this->title;
+        }
 
 
         // Virtual destructor.

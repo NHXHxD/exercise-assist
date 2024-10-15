@@ -1,11 +1,12 @@
 #include "TFExercise.h"
 #include <iostream>
 #include <algorithm>
+#include <string>
 
-TFExercise::TFExercise() {
-
+TFExercise::TFExercise(std::string title) {
+    this->title = title;
+    this->type = "TF";
 }
-
 
 TFExercise* TFExercise::createExercise(int size) {
     TFExercise* exercise;
@@ -23,12 +24,12 @@ TFExercise* TFExercise::createExercise(int size) {
 }  
 
 
-int TFExercise::checkAnswer(TFExercise* exercise) {
+int TFExercise::checkAnswer() {
     vector<string> answers;
     int point = 0;
-    map<string, string>::iterator it = exercise->QnA.begin();
+    map<string, string>::iterator it = QnA.begin();
     int i = 0;
-    while (it != exercise->QnA.end()) {
+    while (it != QnA.end()) {
         cout << "Question" << i+1 << ": " << it->first  <<  endl;
         cout << "Enter your answer (T-F): " << endl;
         string ans;
@@ -37,9 +38,9 @@ int TFExercise::checkAnswer(TFExercise* exercise) {
         ++it;
         i++;
     }
-    map<string, string>::iterator it = exercise->QnA.begin();
+    map<string, string>::iterator it = QnA.begin();
     int i = 0;
-    while (it != exercise->QnA.end()) {
+    while (it != QnA.end()) {
         if (it->second == answers[i]) {
             cout << "You got question " << i+1 << "correct! \n";
             point++;
@@ -52,4 +53,8 @@ int TFExercise::checkAnswer(TFExercise* exercise) {
         i++;
     }
     return point;
+}
+
+string TFExercise::getType() {
+    return type;
 }

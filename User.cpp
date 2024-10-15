@@ -7,7 +7,7 @@ User::User( string& name)
 }
 
 
-void User::updateProficiency( string& skill) {
+void User::updateProficiency() {
     // proficiency++;
 }
 
@@ -28,9 +28,6 @@ void User::viewProgress()  {
 }
 
 
-void User::studySkill() {
-
-}
 void User::viewProgress() {
 
 }

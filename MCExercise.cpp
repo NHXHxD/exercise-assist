@@ -1,10 +1,11 @@
 #include "MCExercise.h"
 #include <iostream>
 #include "User.h"
-MCExercise::MCExercise() {
-
+MCExercise::MCExercise(std::string title) {
+    this->title = title;
+    this->type = "MC";
 }
-MCExercise* MCExercise::createExercise(int size) {
+Exercise* MCExercise::createExercise(int size) {
     MCExercise* exercise;
     for (int i = 0; i < size; i++) {
         string q;
@@ -27,17 +28,17 @@ MCExercise* MCExercise::createExercise(int size) {
 }
 
 
-int MCExercise::checkAnswer(MCExercise* exercise) {
+int MCExercise::checkAnswer() {
     vector<string> answers;
     int point = 0;
-    map<string, string>::iterator it = exercise->QnA.begin();
+    map<string, string>::iterator it = QnA.begin();
     int i = 0;
-    while (it != exercise->QnA.end()) {
+    while (it != QnA.end()) {
         cout << "Question" << i+1 << ": " << it->first  <<  endl;
-        cout << "A: " << exercise->options[i][0];
-        cout << "B: " << exercise->options[i][1];
-        cout << "C: " << exercise->options[i][2];
-        cout << "D: " << exercise->options[i][3];
+        cout << "A: " << options[i][0];
+        cout << "B: " << options[i][1];
+        cout << "C: " << options[i][2];
+        cout << "D: " << options[i][3];
         cout << "Enter your answer: " << endl;
         string ans;
         cin >> ans;
@@ -45,11 +46,11 @@ int MCExercise::checkAnswer(MCExercise* exercise) {
         ++it;
         i++;
     }
-    map<string, string>::iterator it = exercise->QnA.begin();
+    map<string, string>::iterator it = QnA.begin();
     int i = 0;
-    while (it != exercise->QnA.end()) {
+    while (it != QnA.end()) {
         if (it->second == answers[i]) {
-            cout << "You got question " << i+1 << "correct! \n";
+            cout << "You got question " << i+1 << "correct!\n";
             point++;
         }
         else {
@@ -60,6 +61,10 @@ int MCExercise::checkAnswer(MCExercise* exercise) {
         i++;
     }
     return point;
+}
+
+string MCExercise::getType() {
+    return type;
 }
 
 

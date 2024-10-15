@@ -1,9 +1,13 @@
 #include "FBExercise.h"
 #include <iostream>
 #include <algorithm>
+#include <string>
+
 using namespace std;
 
-FBExercise::FBExercise() {
+FBExercise::FBExercise(string title) {
+    this->title = title;
+    this->type = "FB";
 }
 
 FBExercise* FBExercise::createExercise(int size) {
@@ -20,12 +24,12 @@ FBExercise* FBExercise::createExercise(int size) {
     return exercise;
 }  
 
-int FBExercise::checkAnswer(FBExercise* exercise) {
+int FBExercise::checkAnswer() {
     vector<string> answers;
     int point = 0;
     int i = 0;
-    map<string, string>::iterator it = exercise->QnA.begin();
-    while (it != exercise->QnA.end()) {
+    map<string, string>::iterator it = QnA.begin();
+    while (it != QnA.end()) {
         cout << "Question" << i+1 << ": " << it->first  <<  endl;
         cout << "Enter your answer: " << endl;
         string ans;
@@ -33,9 +37,9 @@ int FBExercise::checkAnswer(FBExercise* exercise) {
         answers.push_back(ans);
         ++it;
     }
-    map<string, string>::iterator it = exercise->QnA.begin();
+    map<string, string>::iterator it = QnA.begin();
     int i = 0;
-    while (it != exercise->QnA.end()) {
+    while (it != QnA.end()) {
         if (it->second == answers[i]) {
             cout << "You got question " << i+1 << "correct! \n";
             point++;
@@ -51,3 +55,8 @@ int FBExercise::checkAnswer(FBExercise* exercise) {
     
 
 }
+
+string FBExercise::getType() {
+    return this->type;
+}
+

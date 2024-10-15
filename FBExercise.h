@@ -1,6 +1,8 @@
 #ifndef FBEXERCISE_H
 #define FBEXERCISE_H
 #include <map>
+#include <string>
+
 using namespace std;
 #include "Exercise.h"
 
@@ -8,11 +10,12 @@ using namespace std;
 class FBExercise : public Exercise {
     protected:
         map<string, string> QnA; 
+        string type;
     public:
-        FBExercise();
+        FBExercise(string title);
         FBExercise* FBExercise::createExercise(int size);
-
-        int checkAnswer(FBExercise* exercise);
+        string getType();
+        int checkAnswer();
 
 
 };
