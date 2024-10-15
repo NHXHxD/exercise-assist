@@ -16,11 +16,15 @@ Exercise* TFExercise::createExercise(int size) {
     for (int i = 0; i < size; i++) {
         TFQuestion q;
 
+        // get question from user input
         std::cout << "Enter question " << i + 1 << ": ";
         std::getline(std::cin, q.questionText);
 
+        // get correct input
         std::cout << "Enter correct answer (T/F): ";
         bool validInput = false;
+
+        // make sure input is valid
         while (!validInput) {
             std::getline(std::cin, q.correctAnswer);
             // Convert to uppercase
@@ -57,6 +61,8 @@ int TFExercise::checkAnswer() {
             std::getline(std::cin, ans);
             // Convert to uppercase
             std::transform(ans.begin(), ans.end(), ans.begin(), ::toupper);
+
+            // ensure input is valid
             if (ans == "T" || ans == "F") {
                 validInput = true;
             } else {

@@ -1,6 +1,8 @@
 #include "MCExercise.h"
 #include <iostream>
 #include <limits>
+#include <algorithm>
+#include <vector>
 
 MCExercise::MCExercise(std::string title) : Exercise(title) {
     this->title = title;
@@ -29,9 +31,22 @@ Exercise* MCExercise::createExercise(int size) {
         std::cout << "Enter option D: ";
         std::getline(std::cin, q.options[3]);
 
-        std::cout << "Enter correct answer (A/B/C/D): \n";
+        std::cout << "Enter correct answer (A/B/C/D): ";
         std::getline(std::cin, q.correctAnswer);
-
+        bool valid = false;
+            while (!valid) {
+                std::cout << "Enter correct answer (A/B/C/D): ";
+                std::getline(std::cin, q.correctAnswer);
+                
+                // Convert input to uppercase to make validation case-insensitive
+                std::transform(q.correctAnswer.begin(), q.correctAnswer.end(), q.correctAnswer.begin(), ::toupper);
+                
+                if (q.correctAnswer == "A" || q.correctAnswer == "B" || q.correctAnswer == "C" || q.correctAnswer == "D") {
+                    valid = true;
+                } else {
+                    std::cout << "Incorrect response. Please enter your answer again.\n";
+                }
+                    }
         questions.push_back(q);
     }
     return this; // Return the current object
@@ -73,7 +88,7 @@ int MCExercise::checkAnswer() {
     }
 
     std::cout << "You scored " << points << " out of " << questions.size() << "!\n";
-    return points;
+    return points; // get points to add into the number of correct answers
 }
 
 std::string MCExercise::getType() {

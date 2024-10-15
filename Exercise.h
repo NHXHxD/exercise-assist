@@ -28,7 +28,6 @@ class Exercise {
             return this->title;
         }
 
-
     };
 
 #endif 

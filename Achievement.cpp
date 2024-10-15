@@ -6,6 +6,8 @@ Achievement::Achievement(std::string name, std::string desc)
     // Constructor implementation
 }
 
+
+// display the achievement of the user
 void Achievement::displayAchievement() const {
     std::cout << "Achievement Unlocked: " << achievementName << std::endl;
     std::cout << description << std::endl;

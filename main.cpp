@@ -33,6 +33,7 @@ int main() {
         std::cout << "Enter your choice: ";
         cin >> choice;  // Get user input for choice
 
+        // create exercise
         if (choice == 1) {
             int ch = 0;  // Initialize ch to prevent undefined behavior
             while (ch < 1 || ch > 4) {
@@ -55,27 +56,37 @@ int main() {
             }
 
             // Create an exercise based on the user's choice
+
+            // multiple choice exercise creation
             if (ch == 1) {
                 Exercise* exercise = new MCExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
+
+            // timed multiple choice exercise creatioe
             if (ch == 2) {
                 Exercise* exercise = new TMCExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
+
+            // True False exercise creation
             else if (ch == 3) {
                 Exercise* exercise = new TFExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
+
+            // Fill in the blank exercise creation
             else if (ch == 4) {
                 Exercise* exercise = new FBExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
         }
+
+        // select exercise to study
         else if (choice == 2) {
             if (exercises.size() == 0) {
                 cout << "There is no available exercises. Please create more exercises!\n";
@@ -91,17 +102,21 @@ int main() {
                     cout << "Invalid input! Please select an exercise: ";
                     cin >> c;
                 }
-                int point = exercises[c - 1]->checkAnswer();  // Adjusted index to c - 1
+                int point = exercises[c - 1]->checkAnswer();  // Adjusted index to c - 1 (because array is 0 indexed)
                 user.correctChoice(point);
                 user.earnAchievement();
             }
         }
+
+        // display current achievements
         else if (choice == 3) {
             vector<Achievement> achievement = user.getAchievements();
             for (int i = 0; i < achievement.size(); i++) {
                 achievement[i].displayAchievement();
             }
         }
+
+        // exit the program
         else if (choice == 6) {
             // Free the memory allocated for the exercises
             for (Exercise* exercise : exercises) {
