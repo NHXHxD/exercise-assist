@@ -35,8 +35,7 @@ The application follows an object-oriented design with the following key classes
 
 - **`DataManager` Class:** (Coming soon!)
   - Handles saving and loading of application data to and from a file.
-  - Serializes and deserializes exercises and user data.
-
+  
 - **`main.cpp`:**
   - Contains the main loop and user interface logic.
   - Interacts with the user and coordinates the application flow.
