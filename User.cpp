@@ -6,13 +6,6 @@ User::User(string name) {
     correct = 0;
 }
 
-
-
-
-
-void User::viewProgress()  {
-    cout << "Progress for user: " << username << endl;
-}
 void User::earnAchievement() {
     if (this->correct >= 5) {
         Achievement ach = Achievement("Correct 5!", "Getting 5 questions correct!");
@@ -41,6 +34,9 @@ string User::getUsername()  {
     return username;
 }
 
+void User::correctChoice(int point) {
+    correct += point;
+}
 
 vector<Exercise*> User::getExercises() {
     return this->exercises;

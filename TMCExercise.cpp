@@ -1,3 +1,5 @@
+// TMCExercise.cpp
+
 #include "TMCExercise.h"
 #include <iostream>
 #include <limits>
@@ -6,8 +8,15 @@
 #include <algorithm>
 #include <cctype>
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#include <termios.h>
+#include <fcntl.h>
+#endif
+
 TMCExercise::TMCExercise(std::string title) : MCExercise(title) {
-    this->title = title;
     this->type = "Timed MC";
     this->timeLimit = 0;
 }
@@ -30,6 +39,41 @@ Exercise* TMCExercise::createExercise(int size) {
     return this;
 }
 
+// Platform-specific function to check if input is available without blocking
+bool inputAvailable() {
+#ifdef _WIN32
+    // Windows implementation
+    HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+    DWORD events = 0;
+    GetNumberOfConsoleInputEvents(hStdin, &events);
+    return events > 0;
+#else
+    // POSIX implementation
+    struct termios oldt, newt;
+    int oldf;
+    bool inputAvailable = false;
+
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // Disable canonical mode and echo
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
+
+    char ch;
+    if (read(STDIN_FILENO, &ch, 1) > 0) {
+        inputAvailable = true;
+        ungetc(ch, stdin);
+    }
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    fcntl(STDIN_FILENO, F_SETFL, oldf);
+
+    return inputAvailable;
+#endif
+}
+
 int TMCExercise::checkAnswer() {
     int points = 0;
     std::vector<std::string> userAnswers;
@@ -48,22 +92,19 @@ int TMCExercise::checkAnswer() {
         std::cout << "D: " << q.options[3] << std::endl;
         std::cout << "Enter your answer (A/B/C/D): ";
 
-        // Start the timer
-        auto startTime = std::chrono::steady_clock::now();
-
         std::string ans;
         bool answered = false;
         bool timeUp = false;
 
-        // Simulate time limit (Note: This does not actually enforce the time limit due to blocking nature of std::getline)
-        // In a real implementation, you'd need non-blocking input or multithreading
-        while (!answered) {
-            if (std::getline(std::cin, ans)) {
-                // User provided an answer
+        auto startTime = std::chrono::steady_clock::now();
+
+        while (true) {
+            if (inputAvailable()) {
+                std::getline(std::cin, ans);
                 answered = true;
+                break;
             }
 
-            // Check the elapsed time
             auto currentTime = std::chrono::steady_clock::now();
             auto elapsedSeconds = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime).count();
 
@@ -71,6 +112,9 @@ int TMCExercise::checkAnswer() {
                 timeUp = true;
                 break;
             }
+
+            // Sleep for a short duration to prevent high CPU usage
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
 
         if (timeUp) {

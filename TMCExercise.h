@@ -7,7 +7,7 @@
 class TMCExercise : public MCExercise {
 protected:
     int timeLimit; // Time limit in seconds for each question
-    std::string type;
+    // Removed redundant 'type' declaration
 
 public:
     TMCExercise(std::string title);

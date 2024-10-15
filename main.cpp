@@ -5,10 +5,11 @@
 #include "MCExercise.h"
 #include "TFExercise.h"
 #include "FBExercise.h"
+#include "TMCExercise.h"
 using namespace std;
 
 int main() {
-    std::cout << "Welcome to SkillMaster!" << std::endl;
+    std::cout << "Welcome to ExerciseAssist!" << std::endl;
     std::cout << "Enter your username: ";
     std::string username;
     cin >> username;
@@ -21,15 +22,14 @@ int main() {
     vector<Exercise*> exercises;
     int choice = 0;  // Initialize choice to prevent undefined behavior
 
-    while (choice != 7) {
+    while (choice != 6) {
         std::cout << "\nMain Menu:\n";
         std::cout << "1. Create a New Exercise\n";
         std::cout << "2. Study a Exercise\n";
-        std::cout << "3. View Progress\n";
-        std::cout << "4. Achievements\n";
-        std::cout << "5. Save Data\n";
-        std::cout << "6. Load Data\n";
-        std::cout << "7. Exit\n";
+        std::cout << "3. Achievements\n";
+        std::cout << "4. Save Data\n";
+        std::cout << "5. Load Data\n";
+        std::cout << "6. Exit\n";
         std::cout << "Enter your choice: ";
         cin >> choice;  // Get user input for choice
 
@@ -39,8 +39,8 @@ int main() {
                 cout << "Which type of exercise would you like to create? (1-4): " << endl;
                 cout << "1. Multiple Choice\n";
                 cout << "2. Timed Multiple Choice\n";
-                cout << "3. True/False\n";
-                cout << "4. Fill in the Blank\n";
+                cout << "2. True/False\n";
+                cout << "3. Fill in the Blank\n";
                 cout << "Enter your choice: ";
                 cin >> ch;  // Get user input for ch
             }
@@ -60,19 +60,17 @@ int main() {
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
-            /*
-            else if (ch == 2) {
+            if (ch == 2) {
                 Exercise* exercise = new TMCExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
-            */
-            else if (ch == 3) {
+            else if (ch == 2) {
                 Exercise* exercise = new TFExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
-            else if (ch == 4) {
+            else if (ch == 3) {
                 Exercise* exercise = new FBExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
@@ -90,18 +88,17 @@ int main() {
                 int c;
                 cin >> c;
                 int point = exercises[c - 1]->checkAnswer();  // Adjusted index to c - 1
+                user.correctChoice(point);
+                user.earnAchievement();
             }
         }
         else if (choice == 3) {
-            user.viewProgress();
-        }
-        else if (choice == 4) {
             vector<Achievement> achievement = user.getAchievements();
             for (int i = 0; i < achievement.size(); i++) {
                 achievement[i].displayAchievement();
             }
         }
-        else if (choice == 7) {
+        else if (choice == 6) {
             std::cout << "Exiting the application." << std::endl;
             break;
         }

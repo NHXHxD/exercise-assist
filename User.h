@@ -20,13 +20,9 @@ class User {
     public:
         // constructor
         User(std::string username);
-
-        // view user's progress
-        void viewProgress();
-
+ 
         // Gets vector of exercises
-        vector<Exercise*> getExercises();
-         
+        vector<Exercise*> getExercises();                                
 
         // Gets the username of the user.
 
