@@ -25,6 +25,16 @@ void User::earnAchievement() {
         achievements.push_back(ach);
         std::cout << "Congratulations! You've earned the achievement: Correct 20!" << std::endl;
     }
+    if (correct >= 30 && !hasAchievement("Correct 30!")) {
+        Achievement ach("Correct 20!", "Getting 30 questions correct!");
+        achievements.push_back(ach);
+        std::cout << "Congratulations! You've earned the achievement: Correct 30!" << std::endl;
+    }
+    if (correct >= 25 && !hasAchievement("Correct 25!")) {
+        Achievement ach("Correct 20!", "Getting 25 questions correct!");
+        achievements.push_back(ach);
+        std::cout << "Congratulations! You've earned the achievement: Correct 25!" << std::endl;
+    }
 }
 
 bool User::hasAchievement(const std::string& name) {
