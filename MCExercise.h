@@ -19,4 +19,4 @@ class MCExercise : public Exercise {
         string getType();
  
 };
-#endif MCEXERCISE_H
+#endif

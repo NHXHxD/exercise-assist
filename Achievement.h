@@ -2,7 +2,6 @@
 #define ACHIEVEMENT_H
 
 #include <string>
-#include "User.h"
 
 class Achievement {
     private:

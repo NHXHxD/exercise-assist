@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <string>
 
-TFExercise::TFExercise(std::string title) {
+TFExercise::TFExercise(std::string title)    : Exercise(title)  {
     this->title = title;
     this->type = "TF";
 }
@@ -38,8 +38,8 @@ int TFExercise::checkAnswer() {
         ++it;
         i++;
     }
-    map<string, string>::iterator it = QnA.begin();
-    int i = 0;
+    it = QnA.begin();
+    i = 0;
     while (it != QnA.end()) {
         if (it->second == answers[i]) {
             cout << "You got question " << i+1 << "correct! \n";

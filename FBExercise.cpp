@@ -5,7 +5,7 @@
 
 using namespace std;
 
-FBExercise::FBExercise(string title) {
+FBExercise::FBExercise(string title)    : Exercise(title)  {
     this->title = title;
     this->type = "FB";
 }
@@ -37,8 +37,8 @@ int FBExercise::checkAnswer() {
         answers.push_back(ans);
         ++it;
     }
-    map<string, string>::iterator it = QnA.begin();
-    int i = 0;
+    it = QnA.begin();
+    i = 0;
     while (it != QnA.end()) {
         if (it->second == answers[i]) {
             cout << "You got question " << i+1 << "correct! \n";

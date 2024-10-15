@@ -13,8 +13,8 @@ class Exercise {
         std::string title;
         std::string description;
     public:
-        // Constructs an Exercise with the given question text and skills addressed.
-        Exercise(std::string title, std::string description);
+        // Constructs an Exercise
+        Exercise(std::string title);
 
         // Creates the exercise to the user.
         virtual Exercise* createExercise(int size) = 0;
@@ -29,10 +29,6 @@ class Exercise {
         }
 
 
-        // Virtual destructor.
-        virtual ~Exercise();
-
-
     };
 
-#endif // EXERCISE_H
+#endif 

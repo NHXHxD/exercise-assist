@@ -1,7 +1,7 @@
 #include "MCExercise.h"
 #include <iostream>
 #include "User.h"
-MCExercise::MCExercise(std::string title) {
+MCExercise::MCExercise(std::string title)     : Exercise(title)  {
     this->title = title;
     this->type = "MC";
 }
@@ -46,8 +46,8 @@ int MCExercise::checkAnswer() {
         ++it;
         i++;
     }
-    map<string, string>::iterator it = QnA.begin();
-    int i = 0;
+    it = QnA.begin();
+    i = 0;
     while (it != QnA.end()) {
         if (it->second == answers[i]) {
             cout << "You got question " << i+1 << "correct!\n";

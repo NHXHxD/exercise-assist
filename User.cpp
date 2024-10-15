@@ -1,43 +1,18 @@
 #include "User.h"
 #include <map>
 using namespace std;
-User::User( string& name)
-    : username(name) {
-    int correct = 0;
+User::User(string name) {
+    username = name;
+    correct = 0;
 }
 
 
-void User::updateProficiency() {
-    // proficiency++;
-}
 
-void User::updateTime( double time) {
-    timeSpent += time;
-}
+
 
 void User::viewProgress()  {
     cout << "Progress for user: " << username << endl;
-    cout << "Proficiency: " << endl;
-    for ( auto& entry : proficiency) {
-        cout << "- " << entry.first << ": " << entry.second << " points" << endl;
-    }
-    cout << "Time Spent:" << endl;
-    for ( auto& entry : timeSpent) {
-        cout << "- " << entry.first << ": " << entry.second << " seconds" << endl;
-    }
 }
-
-
-void User::viewProgress() {
-
-}
-
-
-
-void User::correctChoice() {
-    this->correct++;
-}
-
 void User::earnAchievement() {
     if (this->correct >= 5) {
         Achievement ach = Achievement("Correct 5!", "Getting 5 questions correct!");
@@ -66,17 +41,11 @@ string User::getUsername()  {
     return username;
 }
 
-    return achievements;
-}
-
-map<string, int>& User::getProficiency()  {
-    return proficiency;
-}
-
-map<string, double>& User::getTimeSpent()  {
-    return timeSpent;
-}
 
 vector<Exercise*> User::getExercises() {
     return this->exercises;
+}
+
+std::vector<Achievement> User::getAchievements() {
+    return this->achievements;
 }

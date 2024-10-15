@@ -13,7 +13,7 @@ class FBExercise : public Exercise {
         string type;
     public:
         FBExercise(string title);
-        FBExercise* FBExercise::createExercise(int size);
+        FBExercise* createExercise(int size);
         string getType();
         int checkAnswer();
 

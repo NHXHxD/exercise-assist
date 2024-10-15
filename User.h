@@ -15,7 +15,6 @@ class User {
         std::string username;
         std::vector<Achievement> achievements;
         vector<Exercise*> exercises; 
-        std::map<std::string, int> proficiency; // Skill name to points
         std::map<std::string, double> timeSpent; // Skill name to time in seconds
         int correct;
     public:
@@ -31,19 +30,18 @@ class User {
 
         // Gets the username of the user.
 
-        std::string getUsername() ;
+        std::string getUsername();
+
         // earn achievement
         void earnAchievement();
 
         // increase the number of corect choices
-        void correctChoice();
+        void correctChoice(int point);
 
         // Gets the user's achievements.
         std::vector<Achievement> getAchievements();
 
-
-
         
 };
 
-#endif USER_H
+#endif

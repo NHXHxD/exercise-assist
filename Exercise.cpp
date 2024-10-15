@@ -1,12 +1,8 @@
 #include "Exercise.h"
 
-Exercise::Exercise(std::string title, std::string description) {
+Exercise::Exercise(std::string title) {
     this->title = title;
-    this->description = description;
 }
 
 
 
-Exercise::~Exercise() {
-    // Virtual destructor implementation
-}
