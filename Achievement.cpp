@@ -1,20 +1,20 @@
 #include "Achievement.h"
 #include <iostream>
 
-Achievement::Achievement(std::string name,  std::string desc)
+Achievement::Achievement(std::string name, std::string desc)
     : achievementName(name), description(desc) {
-    // ructor implementation
+    // Constructor implementation
 }
 
-void Achievement::displayAchievement()  {
+void Achievement::displayAchievement() const {
     std::cout << "Achievement Unlocked: " << achievementName << std::endl;
     std::cout << description << std::endl;
 }
 
-std::string Achievement::getName()  {
+std::string Achievement::getName() const {
     return achievementName;
 }
 
-std::string Achievement::getDescription()  {
+std::string Achievement::getDescription() const {
     return description;
 }

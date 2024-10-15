@@ -16,10 +16,10 @@ Exercise* TFExercise::createExercise(int size) {
     for (int i = 0; i < size; i++) {
         TFQuestion q;
 
-        std::cout << "Enter question " << i + 1 << ": \n";
+        std::cout << "Enter question " << i + 1 << ": ";
         std::getline(std::cin, q.questionText);
 
-        std::cout << "Enter correct answer (T/F): \n";
+        std::cout << "Enter correct answer (T/F): ";
         bool validInput = false;
         while (!validInput) {
             std::getline(std::cin, q.correctAnswer);

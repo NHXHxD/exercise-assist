@@ -2,10 +2,14 @@
 
 # Compiler
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -Wextra
+CXXFLAGS = -std=c++11 
 
 # Source Files
 SRCS = main.cpp User.cpp Achievement.cpp Exercise.cpp MCExercise.cpp TMCExercise.cpp TFExercise.cpp FBExercise.cpp 
+
+# GCH Files
+GCHS = User.h.gch Achievement.h.gch Exercise.h.gch MCExercise.h.gch TMCExercise.h.gch TFExercise.h.gch FBExercise.h.gch 
+
 
 # Header Files
 HEADERS = User.h Achievement.h Exercise.h MCExercise.h TMCExercise.h TFExercise.h FBExercise.h 
@@ -29,7 +33,7 @@ $(EXEC): $(OBJS)
 
 # Clean up object files and executables
 clean:
-	rm -f $(OBJS) $(EXEC) $(TEST_OBJS) $(TEST_EXEC)
+	rm -f $(OBJS) $(EXEC) $(TEST_OBJS) $(TEST_EXEC) $(GCHS)
 
 # Phony targets
 .PHONY: all clean

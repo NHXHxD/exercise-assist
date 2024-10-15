@@ -16,10 +16,10 @@ Exercise* FBExercise::createExercise(int size) {
     for (int i = 0; i < size; i++) {
         FBQuestion q;
 
-        std::cout << "Enter question " << i + 1 << ": \n";
+        std::cout << "Enter question " << i + 1 << ": ";
         std::getline(std::cin, q.questionText);
 
-        std::cout << "Enter correct answer: \n";
+        std::cout << "Enter correct answer: ";
         std::getline(std::cin, q.correctAnswer);
 
         questions.push_back(q);

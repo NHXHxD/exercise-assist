@@ -39,18 +39,18 @@ int main() {
                 cout << "Which type of exercise would you like to create? (1-4): " << endl;
                 cout << "1. Multiple Choice\n";
                 cout << "2. Timed Multiple Choice\n";
-                cout << "2. True/False\n";
-                cout << "3. Fill in the Blank\n";
+                cout << "3. True/False\n";
+                cout << "4. Fill in the Blank\n";
                 cout << "Enter your choice: ";
                 cin >> ch;  // Get user input for ch
             }
 
             int numOfExercise = 0;
             string name;
-            cout << "Enter a name for your exercise: " << endl;
+            cout << "Enter a name for your exercise: ";
             cin >> name;
             while (numOfExercise < 1 || numOfExercise > 100) {
-                cout << "How many questions will your exercise have? (1-100): " << endl;
+                cout << "How many questions will your exercise have? (1-100): ";
                 cin >> numOfExercise;
             }
 
@@ -65,12 +65,12 @@ int main() {
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
-            else if (ch == 2) {
+            else if (ch == 3) {
                 Exercise* exercise = new TFExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
             }
-            else if (ch == 3) {
+            else if (ch == 4) {
                 Exercise* exercise = new FBExercise(name);
                 exercise->createExercise(numOfExercise);
                 exercises.push_back(exercise);
@@ -84,9 +84,13 @@ int main() {
                 for (int i = 0; i < exercises.size(); i++) {
                     cout << i + 1 << ". " << exercises[i]->getTitle() << endl;
                 }
-                cout << "Select an exercise: \n";
+                cout << "Select an exercise: ";
                 int c;
                 cin >> c;
+                while (c < 1 || c > exercises.size()) {
+                    cout << "Invalid input! Please select an exercise: ";
+                    cin >> c;
+                }
                 int point = exercises[c - 1]->checkAnswer();  // Adjusted index to c - 1
                 user.correctChoice(point);
                 user.earnAchievement();
@@ -99,6 +103,10 @@ int main() {
             }
         }
         else if (choice == 6) {
+            // Free the memory allocated for the exercises
+            for (Exercise* exercise : exercises) {
+                delete exercise;
+    }
             std::cout << "Exiting the application." << std::endl;
             break;
         }

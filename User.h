@@ -7,37 +7,38 @@
 #include <iostream>
 #include "Achievement.h"
 #include "Exercise.h"
-using namespace std;
 
-// Class representing a user profile.
+// Remove 'using namespace std;' from header files to avoid namespace pollution.
+
 class User {
-    protected:
-        std::string username;
-        std::vector<Achievement> achievements;
-        vector<Exercise*> exercises; 
-        std::map<std::string, double> timeSpent; // Skill name to time in seconds
-        int correct;
-    public:
-        // constructor
-        User(std::string username);
- 
-        // Gets vector of exercises
-        vector<Exercise*> getExercises();                                
+protected:
+    std::string username;
+    std::vector<Achievement> achievements;
+    std::vector<Exercise*> exercises;
+    std::map<std::string, double> timeSpent; // Skill name to time in seconds
+    int correct;
 
-        // Gets the username of the user.
+public:
+    // Constructor
+    User(std::string username);
 
-        std::string getUsername();
+    // Gets vector of exercises
+    std::vector<Exercise*> getExercises();
 
-        // earn achievement
-        void earnAchievement();
+    // Gets the username of the user.
+    std::string getUsername();
 
-        // increase the number of corect choices
-        void correctChoice(int point);
+    // Earn achievement
+    void earnAchievement();
 
-        // Gets the user's achievements.
-        std::vector<Achievement> getAchievements();
+    // Increase the number of correct choices
+    void correctChoice(int point);
 
-        
+    // Gets the user's achievements.
+    std::vector<Achievement> getAchievements();
+
+    // Helper function to check if an achievement has already been earned
+    bool hasAchievement(const std::string& name);
 };
 
-#endif
+#endif // USER_H

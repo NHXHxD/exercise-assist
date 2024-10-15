@@ -14,19 +14,19 @@ Exercise* MCExercise::createExercise(int size) {
     for (int i = 0; i < size; i++) {
         MCQuestion q;
 
-        std::cout << "Enter question " << i + 1 << ": \n";
+        std::cout << "Enter question " << i + 1 << ": ";
         std::getline(std::cin, q.questionText);
 
-        std::cout << "Enter option A: \n";
+        std::cout << "Enter option A: ";
         std::getline(std::cin, q.options[0]);
 
-        std::cout << "Enter option B: \n";
+        std::cout << "Enter option B: ";
         std::getline(std::cin, q.options[1]);
 
-        std::cout << "Enter option C: \n";
+        std::cout << "Enter option C: ";
         std::getline(std::cin, q.options[2]);
 
-        std::cout << "Enter option D: \n";
+        std::cout << "Enter option D: ";
         std::getline(std::cin, q.options[3]);
 
         std::cout << "Enter correct answer (A/B/C/D): \n";
